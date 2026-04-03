@@ -52,9 +52,14 @@ function saveData() {
 
 // ===== VIEW SWITCHING =====
 function showView(name) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v => {
+    v.classList.remove('active');
+    v.classList.add('hidden');
+  });
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('view-' + name).classList.add('active');
+  const target = document.getElementById('view-' + name);
+  target.classList.remove('hidden');
+  target.classList.add('active');
   document.getElementById('nav-' + name).classList.add('active');
 }
 
