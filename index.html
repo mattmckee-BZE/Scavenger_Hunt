@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scavenger Hunt!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== CELEBRATION OVERLAY ===== -->
+  <div id="celebration" class="celebration hidden">
+    <div class="celebration-content">
+      <div class="celebration-emoji">🎉</div>
+      <h2 class="celebration-title">You found it!</h2>
+      <p class="celebration-msg" id="celebration-msg">Amazing work, explorer!</p>
+      <button class="btn-next" id="btn-next-clue">Next Clue →</button>
+      <button class="btn-next btn-finish hidden" id="btn-finish">🏆 Finish Hunt!</button>
+    </div>
+    <canvas id="confetti-canvas"></canvas>
+  </div>
+
+  <!-- ===== WIN SCREEN ===== -->
+  <div id="win-screen" class="win-screen hidden">
+    <div class="win-content">
+      <div class="win-trophy">🏆</div>
+      <h1 class="win-title">Hunt Complete!</h1>
+      <p class="win-subtitle">You solved all the clues — you're a true explorer!</p>
+      <button class="btn-play-again" id="btn-play-again">Play Again</button>
+    </div>
+    <canvas id="confetti-canvas-win"></canvas>
+  </div>
+
+  <!-- ===== NAV ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="logo">🗺️ Scavenger Hunt</span>
+      <nav class="header-nav">
+        <button class="nav-btn active" id="nav-play" onclick="showView('play')">Play</button>
+        <button class="nav-btn" id="nav-admin" onclick="showView('admin')">Admin</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== PLAY VIEW ===== -->
+  <main id="view-play" class="view active">
+    <div class="play-container">
+
+      <!-- No clues state -->
+      <div id="no-clues-msg" class="no-clues hidden">
+        <div class="no-clues-icon">🔍</div>
+        <h2>No clues yet!</h2>
+        <p>Ask a grown-up to add some clues in the Admin tab.</p>
+      </div>
+
+      <!-- Active clue card -->
+      <div id="clue-card" class="clue-card hidden">
+        <div class="clue-header">
+          <span class="clue-badge" id="clue-badge">Clue 1</span>
+          <span class="clue-progress" id="clue-progress">1 / 5</span>
+        </div>
+
+        <div class="clue-location" id="clue-location">
+          <span class="location-icon">📍</span>
+          <span id="location-name">The Kitchen</span>
+        </div>
+
+        <div class="clue-text-box">
+          <p class="clue-text" id="clue-text">Loading clue…</p>
+        </div>
+
+        <div class="hint-area" id="hint-area">
+          <button class="btn-hint" id="btn-hint" onclick="showHint()">💡 Need a hint?</button>
+          <p class="hint-text hidden" id="hint-text"></p>
+        </div>
+
+        <div class="answer-area">
+          <label class="answer-label" for="answer-input">What's the answer?</label>
+          <div class="answer-row">
+            <input
+              type="text"
+              id="answer-input"
+              class="answer-input"
+              placeholder="Type your answer…"
+              autocomplete="off"
+              autocorrect="off"
+              spellcheck="false"
+            />
+            <button class="btn-check" onclick="checkAnswer()">Check!</button>
+          </div>
+          <p class="wrong-msg hidden" id="wrong-msg">❌ Not quite — try again!</p>
+        </div>
+      </div>
+
+      <!-- Progress dots -->
+      <div class="progress-dots" id="progress-dots"></div>
+
+    </div>
+  </main>
+
+  <!-- ===== ADMIN VIEW ===== -->
+  <main id="view-admin" class="view hidden">
+    <div class="admin-container">
+
+      <div class="admin-header">
+        <h1 class="admin-title">🛠️ Admin Panel</h1>
+        <p class="admin-subtitle">Add, edit, and arrange your clues here.</p>
+      </div>
+
+      <!-- Add / Edit form -->
+      <div class="clue-form-card">
+        <h2 class="form-title" id="form-title">Add a New Clue</h2>
+
+        <input type="hidden" id="edit-index" value="-1" />
+
+        <div class="form-group">
+          <label for="f-location">Location name <span class="req">*</span></label>
+          <input type="text" id="f-location" placeholder="e.g. The backyard tree" />
+        </div>
+
+        <div class="form-group">
+          <label for="f-clue">Clue text <span class="req">*</span></label>
+          <textarea id="f-clue" rows="3" placeholder="e.g. I have roots but never grow, I have a trunk but no suitcase…"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="f-answer">Answer <span class="req">*</span></label>
+          <input type="text" id="f-answer" placeholder="e.g. tree" />
+          <small>Case-insensitive — players can type in any case.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="f-hint">Hint (optional)</label>
+          <input type="text" id="f-hint" placeholder="e.g. Look outside…" />
+        </div>
+
+        <div class="form-group">
+          <label for="f-celebration">Celebration message (optional)</label>
+          <input type="text" id="f-celebration" placeholder="e.g. Great job, explorer!" />
+        </div>
+
+        <div class="form-actions">
+          <button class="btn-save" onclick="saveClue()">💾 Save Clue</button>
+          <button class="btn-cancel hidden" id="btn-cancel" onclick="cancelEdit()">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Clue list -->
+      <div class="clue-list-section">
+        <div class="clue-list-header">
+          <h2>Your Clues</h2>
+          <span class="clue-count" id="clue-count">0 clues</span>
+        </div>
+        <div id="admin-clue-list" class="admin-clue-list">
+          <p class="empty-list">No clues added yet. Fill in the form above!</p>
+        </div>
+
+        <div class="admin-actions">
+          <button class="btn-reset-hunt" onclick="resetHunt()">🔄 Reset Hunt Progress</button>
+          <button class="btn-clear-all" onclick="clearAllClues()">🗑️ Clear All Clues</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
