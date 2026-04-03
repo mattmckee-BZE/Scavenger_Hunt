@@ -1,23 +1,23 @@
 [
   {
-    "location": "The Kitchen",
-    "clue": "I keep things cold, I hum all day,\nopen my door to find your way.",
-    "answer": "fridge",
-    "hint": "Look for something that keeps your food fresh!",
-    "celebration": "Brr! You found the fridge — great start, explorer! 🥶"
+    "location": "Home",
+    "clue": "It's been a really hot summer. Where did we all have to camp when nights were too steamy?",
+    "answer": "Mum and Dad's Room",
+    "hint": "Upstairs",
+    "celebration": "Nice and cool! Great start, explorers! 🥶"
   },
   {
-    "location": "The Living Room",
-    "clue": "I have four legs but never walk,\nyou sit on me to rest and talk.",
-    "answer": "couch",
-    "hint": "It's something soft you love to relax on.",
-    "celebration": "Couch potato detective! Well done! 🛋️"
+    "location": "Home",
+    "clue": "We aren't in the ocean, but I'm still a big white whale!",
+    "answer": "Migs",
+    "hint": "Get ready to head out!",
+    "celebration": "Car detective! Well done! 🛋️"
   },
   {
-    "location": "The Backyard",
-    "clue": "I have roots but never grow,\nI have a trunk with no suitcase though.",
-    "answer": "tree",
-    "hint": "Go outside and look for something tall and leafy!",
-    "celebration": "You really went out on a limb for that one! 🌳"
+    "location": "Paddington",
+    "clue": "You can find cups of tea and maybe even go for a swim here?",
+    "answer": "Barbie's House",
+    "hint": "You may also get lots of hugs",
+    "celebration": "Say hello to your grandmother!"
   }
 ]
