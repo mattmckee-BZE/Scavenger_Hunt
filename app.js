@@ -5,8 +5,6 @@ let currentClueIndex = 0;
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
   loadData();
-  renderPlay();
-  renderAdminList();
 
   document.getElementById('answer-input').addEventListener('keydown', e => {
     if (e.key === 'Enter') checkAnswer();
@@ -16,17 +14,35 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===== STORAGE =====
 function loadData() {
   try {
-    const stored = localStorage.getItem('scavenger_clues');
-    if (stored) clues = JSON.parse(stored);
-  } catch { clues = []; }
-
-  try {
     const idx = localStorage.getItem('scavenger_current');
     if (idx !== null) currentClueIndex = parseInt(idx, 10);
   } catch { currentClueIndex = 0; }
 
-  // Guard against index out of range
-  if (currentClueIndex >= clues.length) currentClueIndex = 0;
+  const stored = localStorage.getItem('scavenger_clues');
+  if (stored) {
+    // Clues already saved in localStorage — use them
+    try { clues = JSON.parse(stored); } catch { clues = []; }
+    if (currentClueIndex >= clues.length) currentClueIndex = 0;
+    renderPlay();
+    renderAdminList();
+  } else {
+    // First ever load — seed from clues.json
+    fetch('clues.json')
+      .then(r => r.json())
+      .then(data => {
+        clues = Array.isArray(data) ? data : [];
+        currentClueIndex = 0;
+        saveData();
+        renderPlay();
+        renderAdminList();
+      })
+      .catch(() => {
+        // clues.json missing or empty — start fresh
+        clues = [];
+        renderPlay();
+        renderAdminList();
+      });
+  }
 }
 
 function saveData() {
