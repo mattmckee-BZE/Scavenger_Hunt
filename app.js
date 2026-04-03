@@ -13,40 +13,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ===== STORAGE =====
 function loadData() {
+  // Restore hunt progress from localStorage
   try {
     const idx = localStorage.getItem('scavenger_current');
     if (idx !== null) currentClueIndex = parseInt(idx, 10);
   } catch { currentClueIndex = 0; }
 
-  const stored = localStorage.getItem('scavenger_clues');
-  if (stored) {
-    // Clues already saved in localStorage — use them
-    try { clues = JSON.parse(stored); } catch { clues = []; }
-    if (currentClueIndex >= clues.length) currentClueIndex = 0;
-    renderPlay();
-    renderAdminList();
-  } else {
-    // First ever load — seed from clues.json
-    fetch('clues.json')
-      .then(r => r.json())
-      .then(data => {
-        clues = Array.isArray(data) ? data : [];
-        currentClueIndex = 0;
-        saveData();
-        renderPlay();
-        renderAdminList();
-      })
-      .catch(() => {
-        // clues.json missing or empty — start fresh
-        clues = [];
-        renderPlay();
-        renderAdminList();
-      });
-  }
+  // Always fetch clues fresh from clues.json — never from localStorage
+  fetch('clues.json?t=' + Date.now())
+    .then(r => r.json())
+    .then(data => {
+      clues = Array.isArray(data) ? data : [];
+      if (currentClueIndex >= clues.length) currentClueIndex = 0;
+      renderPlay();
+      renderAdminList();
+    })
+    .catch(() => {
+      clues = [];
+      renderPlay();
+      renderAdminList();
+    });
 }
 
-function saveData() {
-  localStorage.setItem('scavenger_clues', JSON.stringify(clues));
+function saveProgress() {
   localStorage.setItem('scavenger_current', String(currentClueIndex));
 }
 
@@ -135,7 +124,6 @@ function checkAnswer() {
   if (userAnswer === correctAnswer) {
     showCelebration();
   } else {
-    // Wrong answer feedback
     input.classList.add('shake');
     input.addEventListener('animationend', () => input.classList.remove('shake'), { once: true });
     document.getElementById('wrong-msg').classList.remove('hidden');
@@ -165,7 +153,7 @@ function showCelebration() {
     btnNext.onclick = () => {
       hideCelebration();
       currentClueIndex++;
-      saveData();
+      saveProgress();
       renderPlay();
     };
   }
@@ -187,7 +175,7 @@ function showWinScreen() {
     document.getElementById('win-screen').classList.add('hidden');
     stopConfetti();
     currentClueIndex = 0;
-    saveData();
+    saveProgress();
     renderPlay();
   };
 }
@@ -214,7 +202,6 @@ function saveClue() {
     clues.push(clueObj);
   }
 
-  saveData();
   clearForm();
   renderAdminList();
   renderPlay();
@@ -246,7 +233,6 @@ function editClue(index) {
   document.getElementById('form-title').textContent = `Edit Clue ${index + 1}`;
   document.getElementById('btn-cancel').classList.remove('hidden');
 
-  // Scroll to form
   document.querySelector('.clue-form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -254,7 +240,6 @@ function deleteClue(index) {
   if (!confirm(`Delete clue ${index + 1}? This can't be undone.`)) return;
   clues.splice(index, 1);
   if (currentClueIndex >= clues.length) currentClueIndex = Math.max(0, clues.length - 1);
-  saveData();
   renderAdminList();
   renderPlay();
 }
@@ -289,7 +274,7 @@ function renderAdminList() {
 function resetHunt() {
   if (!confirm('Reset hunt progress to the first clue?')) return;
   currentClueIndex = 0;
-  saveData();
+  saveProgress();
   renderPlay();
   alert('Hunt reset! Progress is back at Clue 1.');
 }
@@ -298,7 +283,7 @@ function clearAllClues() {
   if (!confirm('Delete ALL clues? This cannot be undone.')) return;
   clues = [];
   currentClueIndex = 0;
-  saveData();
+  saveProgress();
   renderAdminList();
   renderPlay();
 }
