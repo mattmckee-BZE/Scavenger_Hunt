@@ -2,7 +2,7 @@
   {
     "location": "Home",
     "clue": "It's been a really hot summer. Where did we all have to camp when nights were too steamy?",
-    "answer": "Mum and Dad's Room",
+    "answer": "Mum and Dad's bedroom",
     "hint": "Upstairs",
     "celebration": "Nice and cool! Great start, explorers! 🥶"
   },
@@ -19,5 +19,54 @@
     "answer": "Barbie's House",
     "hint": "You may also get lots of hugs",
     "celebration": "Say hello to your grandmother!"
+  }
+    {
+    "location": "Somewhere else!",
+    "clue": "If you'd want to see all of Brisbane, you have to go very high - where should we head?",
+    "answer": "Mt Coot-tha",
+    "hint": "Sometimes we've seen people fly drones up there",
+    "celebration": "Let me know what you can see!"
+  }
+  {
+    "location": "Mt Coot-tha",
+    "clue": "This is where Mum likes to go to be zen, it's her favourite place on Mt Coot-tha. Lottie and Toby also like it even though it doesn't have sushi or ramen to eat.",
+    "answer": "Japanese Garden",
+    "hint": "It's Japanese and has stepping stones",
+    "celebration": "Nice deep breaths - you're calm and doing well!"
+  }
+  {
+    "location": "River",
+    "clue": "The adventure really begins. We need to find a ferry stop that has two A's and two T's in its name.",
+    "answer": "Regatta",
+    "hint": "Check the stop list",
+    "celebration": "Off to the City Cat!"
+  }
+    {
+    "location": "The City",
+    "clue": "I like to go round and round. I take you very high, I take you very low. What am I?",
+    "answer": "Big Wheel",
+    "hint": "You've ridden me a few times. You get excited to do it, but always say it bores you.",
+    "celebration": "The Big Wheel is right! Well done explorers!"
+  }
+    {
+    "location": "Southbank",
+    "clue": "You now need to get to Central Station. Where can you go to find something to ride there?",
+    "answer": "Train station",
+    "hint": "South Brisbane Train Station",
+    "celebration": "CHOO CHOO!!! Onto the big smoke!!!"
+  }
+    {
+    "location": "Brisbane",
+    "clue": "Now you need to find a hotel nearby (Mom and Dad have a map). Your destination looks like they smashed "Soft" and "Hotel" together. Where is it?",
+    "answer": "Sofitel",
+    "hint":SOF + I + TEL",
+    "celebration": "Dad is very forgetful, you found his jumper!!!"
+  }
+   {
+    "location": "Paddington",
+    "clue": "Wow, what a big day! You need to figure out a way for everyone to go to the place we love and are a family, where we'll have a lovely Easter party.",
+    "answer": "home",
+    "hint"where do you live?",
+    "celebration": "HAPPY EASTER FOR THE MCKEE FAMILY!!!!!!!!!!!"
   }
 ]
