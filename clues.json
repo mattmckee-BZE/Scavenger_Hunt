@@ -59,7 +59,7 @@
     "location": "Brisbane",
     "clue": "Now you need to find a hotel nearby (Mom and Dad have a map). Your destination looks like they smashed SOFT and HOTEL together. Where is it?",
     "answer": "Sofitel",
-    "hint":SOF + I + TEL",
+    "hint":"SOF + I + TEL",
     "celebration": "Dad is very forgetful, you found his jumper!!!"
   }
    {
