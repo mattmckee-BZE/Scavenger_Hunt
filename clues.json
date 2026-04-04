@@ -20,6 +20,13 @@
     "hint": "You may also get lots of hugs",
     "celebration": "Say hello to your grandmother!"
   },
+   {
+    "location": "Paddington",
+    "clue": "You'll be gone for much of today, so you need to keep those bilbys safe. Where would you normally put them?",
+    "answer": "Cupboard",
+    "hint": "Where is the rest of your candy?",
+    "celebration": "Correct! Put it away and keep moving!"
+  },
   {
     "location": "Somewhere else!",
     "clue": "If you'd want to see all of Brisbane, you have to go very high - where should we head?",
